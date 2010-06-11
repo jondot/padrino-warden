@@ -6,7 +6,7 @@ Most of the code was adapted from sinatra_warden (http://github.com/jsmestad/sin
 
 == Usage
 
-Currently padrino-warden uses +:password+ as default authentication strategy. If you wish to change that consult
+Currently padrino-warden uses +password+ as default authentication strategy. If you wish to change that consult
 Warden (http://github.com/hassox/warden).
 
 	class SampleApp < Padrino::Application
@@ -50,7 +50,7 @@ Run this to see your new routes:
 You can now login at
 	http://localhost/sessions/login
 
-After login you can fiddle with current_user for anything you need.
+After login you can fiddle with +current_user+ for anything you need.
 
 
 == Note on Patches/Pull Requests
