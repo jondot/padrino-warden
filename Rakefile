@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'rake'
-
+require 'bundler'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|

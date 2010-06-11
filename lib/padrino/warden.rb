@@ -65,7 +65,7 @@ module Padrino
     end
 
     def self.registered(app)
-      app.helpers Warden::Helpers
+      app.helpers Helpers
 
       # Enable Sessions
       app.set :sessions, true
