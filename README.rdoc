@@ -1,6 +1,48 @@
 = padrino-warden
 
-Description goes here.
+A Padrino (http://github.com/padrino/padrino-framework) module that provides authentication for your Padrino application through Warden (http://github.com/hassox/warden).
+
+Most of the code was adapted from sinatra_warden (http://github.com/jsmestad/sinatra_warden)
+
+== Usage
+
+	class SampleApp < Padrino::Application
+	  configure do
+	    ##
+	    # Application-specific configuration options
+	    #
+	  end
+
+	  register Padrino::Warden
+	  register Warden
+  
+	  class User
+	    attr_reader :name
+	    def initialize(name)
+	      @name=name
+	    end
+    
+	    def self.authenticate(a, b)
+	      return User.new('john')
+	    end
+	  end
+  
+	  Warden::Strategies.add(:password) do
+	    def valid?
+	      params["email"] || params["password"]
+	    end
+
+	    def authenticate!
+	      u = User.authenticate(params["email"], params["password"])
+	      u.nil? ? fail!("Could not log in") : success!(u)
+	    end
+	  end
+	end
+
+Run this to see your new routes:
+
+	$ padrino rake routes
+
 
 == Note on Patches/Pull Requests
  
@@ -12,6 +54,12 @@ Description goes here.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
+== Contributors
+
+* Dotan Nahum (http://github.com/jondot)
+
+For sinatra_warden, thanks to: Justin Smestad (http://github.com/jsmestad), Daniel Neighman (http://github.com/hassox), Shane Hanna (http://github.com/shanna)
+
 == Copyright
 
-Copyright (c) 2010 jondot. See LICENSE for details.
+Copyright (c) 2010 Dotan Nahum (jondot). See LICENSE for details.

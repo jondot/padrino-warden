@@ -5,13 +5,16 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "padrino-warden"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
-    gem.email = "jondotan@gmail.com"
+    gem.summary = %Q{authentication system for using warden with Padrino, adopted from sinatra_warden}
+    gem.description = %Q{basic helpers and authentication methods for using warden with padrino also providing some hooks into Rack::Flash}
+    gem.email = "dotan@paracode.com"
     gem.homepage = "http://github.com/jondot/padrino-warden"
-    gem.authors = ["jondot"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.authors = ["Dotan Nahum"]
+    bundle = Bundler::Definition.from_gemfile('Gemfile')
+    bundle.dependencies.each do |dep|
+      next unless dep.groups.include?(:runtime)
+      gem.add_dependency(dep.name, dep.version_requirements.to_s)
+    end
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
