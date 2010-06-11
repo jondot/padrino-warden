@@ -81,6 +81,9 @@ module Padrino
       # OAuth Specific Settings
       app.set :auth_use_oauth, false
       
+      app.use ::Warden::Manager do |manager|
+          manager.default_strategies :password
+      end
       
       app.controller :sessions do
         post :unauthenticated do
