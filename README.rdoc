@@ -16,7 +16,6 @@ Warden (http://github.com/hassox/warden).
 	    #
 	  end
 
-	  register Warden
 	  register Padrino::Warden
   
  
