@@ -83,6 +83,7 @@ module Padrino
       
       app.use ::Warden::Manager do |manager|
           manager.default_strategies :password
+          manager.failure_app = app
       end
       
       app.controller :sessions do

@@ -41,6 +41,15 @@ Warden (http://github.com/hassox/warden).
 	      u.nil? ? fail!("Could not log in") : success!(u)
 	    end
 	  end
+	
+	  Warden::Manager.serialize_into_session do |user|
+	    user.id
+	  end
+
+	  Warden::Manager.serialize_from_session do |id|
+	    User.get(id)
+	  end
+	
 	end
 
 Run this to see your new routes:
