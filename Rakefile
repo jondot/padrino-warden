@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'rake'
-require 'bundler'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
@@ -10,11 +9,7 @@ begin
     gem.email = "dotan@paracode.com"
     gem.homepage = "http://github.com/jondot/padrino-warden"
     gem.authors = ["Dotan Nahum"]
-    bundle = Bundler::Definition.from_gemfile('Gemfile')
-    bundle.dependencies.each do |dep|
-      next unless dep.groups.include?(:runtime)
-      gem.add_dependency(dep.name, dep.version_requirements.to_s)
-    end
+    gem.add_dependency('warden', '>= 0.10.3')
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
