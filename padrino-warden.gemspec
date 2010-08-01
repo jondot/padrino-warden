@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dotan Nahum"]
-  s.date = %q{2010-06-11}
+  s.date = %q{2010-08-01}
   s.description = %q{basic helpers and authentication methods for using warden with padrino also providing some hooks into Rack::Flash}
   s.email = %q{dotan@paracode.com}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/padrino-warden.rb",
      "lib/padrino/warden.rb",
+     "padrino-warden.gemspec",
      "spec/padrino-warden_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
@@ -45,14 +46,11 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_runtime_dependency(%q<warden>, [">= 0.10.3"])
     else
-      s.add_dependency(%q<sinatra>, [">= 0.9.4"])
       s.add_dependency(%q<warden>, [">= 0.10.3"])
     end
   else
-    s.add_dependency(%q<sinatra>, [">= 0.9.4"])
     s.add_dependency(%q<warden>, [">= 0.10.3"])
   end
 end
