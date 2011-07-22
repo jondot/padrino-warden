@@ -52,11 +52,10 @@ Warden (http://github.com/hassox/warden).
   end
 
 Run this to see your new routes:
-
-	$ padrino rake routes
+  $ padrino rake routes
 
 You can now login at
-	http://localhost/sessions/login
+  http://localhost/sessions/login
 
 After login you can fiddle with +current_user+ for anything you need.
 
