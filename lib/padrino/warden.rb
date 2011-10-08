@@ -87,10 +87,10 @@ module Padrino
       end
       
       app.controller :sessions do
-        post :unauthenticated do
+        post :unauthenticated, :map => '/unauthenticated'  do
           status 401
           warden.custom_failure! if warden.config.failure_app == self.class
-          env['x-rack.flash'][:error] = settings.auth_error_message if defined?(Rack::Flash)
+          flash[:error] = settings.auth_error_message if flash
           render settings.auth_login_template
         end
 
@@ -107,7 +107,7 @@ module Padrino
         get :oauth_callback do
           if settings.auth_use_oauth
             authenticate
-            env['x-rack.flash'][:success] = settings.auth_success_message if defined?(Rack::Flash)
+            flash[:success] = settings.auth_success_message if flash
             redirect settings.auth_success_path
           else
             redirect settings.auth_failure_path
@@ -116,7 +116,7 @@ module Padrino
 
         post :login do
           authenticate
-          env['x-rack.flash'][:success] = settings.auth_success_message if defined?(Rack::Flash)
+          flash[:success] = settings.auth_success_message if flash
           redirect settings.auth_use_referrer && session[:return_to] ? session.delete(:return_to) : 
                    settings.auth_success_path
         end
@@ -124,7 +124,7 @@ module Padrino
         get :logout do
           authorize!
           logout
-          env['x-rack.flash'][:success] = settings.auth_success_message if defined?(Rack::Flash)
+          flash[:success] = settings.auth_success_message if flash
           redirect settings.auth_success_path
         end
       end
