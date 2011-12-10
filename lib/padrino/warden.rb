@@ -90,7 +90,7 @@ module Padrino
         post :unauthenticated, :map => '/unauthenticated'  do
           status 401
           warden.custom_failure! if warden.config.failure_app == self.class
-          flash[:error] = settings.auth_error_message if flash
+          flash.now[:error] = settings.auth_error_message if flash
           render settings.auth_login_template
         end
 
