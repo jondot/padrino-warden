@@ -82,12 +82,14 @@ module Padrino
       app.set :auth_use_oauth, false
       
       app.use ::Warden::Manager do |manager|
-          manager.default_strategies :password
+          manager.scope_defaults :default, 
+            strategies: [:password], 
+            action: 'session/unauthenticated'
           manager.failure_app = app
       end
       
       app.controller :sessions do
-        post :unauthenticated, :map => '/unauthenticated'  do
+        post :unauthenticated  do
           status 401
           warden.custom_failure! if warden.config.failure_app == self.class
           flash.now[:error] = settings.auth_error_message if flash
