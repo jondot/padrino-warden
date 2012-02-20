@@ -84,7 +84,7 @@ module Padrino
       app.use ::Warden::Manager do |manager|
           manager.scope_defaults :default, 
             strategies: [:password], 
-            action: 'session/unauthenticated'
+            action: 'sessions/unauthenticated'
           manager.failure_app = app
       end
       
