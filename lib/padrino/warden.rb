@@ -124,7 +124,6 @@ module Padrino
         end
 
         get :logout do
-          authorize!
           logout
           flash[:success] = settings.auth_success_message if flash
           redirect settings.auth_success_path
