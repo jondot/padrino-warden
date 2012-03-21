@@ -59,6 +59,21 @@ You can now login at
 
 After login you can fiddle with +current_user+ for anything you need.
 
+== Multi Sub-Apps
+
+You UserApp(/user):
+
+    Register Padrino::Warden
+
+This will mount the sessions controller on it:
+
+    /user/sessions/...
+
+You OtherApps:
+
+    Register Padrino::Warden::Helpers
+
+But you must apply the same options in your UserApp.
 
 == Note on Patches/Pull Requests
  
