@@ -43,7 +43,7 @@ module Padrino
 
         get :logout do
           logout
-          flash[:success] = settings.auth_success_message if flash
+          flash[:success] = settings.deauth_success_message if flash
           redirect settings.auth_success_path
         end
       end

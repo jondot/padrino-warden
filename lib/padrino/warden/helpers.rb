@@ -72,8 +72,9 @@ module Padrino
         # into a user's session so that to redirect back to it
         # upon successful authentication
         app.set :auth_use_referrer, false
-        app.set :auth_error_message,   "Could not log you in."
+        app.set :auth_error_message,   "You have provided invalid credentials."
         app.set :auth_success_message, "You have logged in successfully."
+        app.set :deauth_success_message, "You have logged out successfully."
         app.set :auth_login_template, 'sessions/login'
         # OAuth Specific Settings
         app.set :auth_use_oauth, false
