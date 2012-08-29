@@ -51,16 +51,6 @@ module Padrino
       end
       alias_method :current_user=, :user=
 
-      # Require authorization for an action
-      #
-      # @param [String] path to redirect to if user is unauthenticated
-      def authorize!(failure_path=nil)
-        unless authenticated?
-          session[:return_to] = request.path if settings.auth_use_referrer
-          redirect(failure_path ? failure_path : settings.auth_failure_path)
-        end
-      end
-
       def self.registered(app)
         app.helpers Helpers
 
