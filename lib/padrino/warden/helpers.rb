@@ -55,7 +55,7 @@ module Padrino
         app.helpers Helpers
 
         # Enable Sessions
-        app.set :sessions, true
+        app.set :sessions, true unless app.sessions
         app.set :auth_failure_path, '/'
         app.set :auth_success_path, '/'
         # Setting this to true will store last request URL
