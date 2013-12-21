@@ -1,8 +1,8 @@
 = padrino-warden
 
-A Padrino (http://github.com/padrino/padrino-framework) module that provides authentication for your Padrino application through Warden (http://github.com/hassox/warden).
+A Padrino ([](http://github.com/padrino/padrino-framework)) module that provides authentication for your Padrino application through Warden ([](http://github.com/hassox/warden)).
 
-Most of the code was adapted from sinatra_warden (http://github.com/jsmestad/sinatra_warden)
+Most of the code was adapted from sinatra\_warden ([](http://github.com/jsmestad/sinatra_warden))
 
 == Usage
 
@@ -57,7 +57,7 @@ Run this to see your new routes:
 You can now login at
   http://localhost/sessions/login
 
-After login you can fiddle with +current_user+ for anything you need.
+After login you can fiddle with *current\_user* for anything you need.
 
 == Multi Sub-Apps
 
@@ -89,7 +89,7 @@ But you must apply the same options in your UserApp.
 
 * Dotan Nahum (http://github.com/jondot)
 
-For sinatra_warden, thanks to: Justin Smestad (http://github.com/jsmestad), Daniel Neighman (http://github.com/hassox), Shane Hanna (http://github.com/shanna)
+For sinatra\_warden, thanks to: Justin Smestad ([](http://github.com/jsmestad)), Daniel Neighman ([](http://github.com/hassox)), Shane Hanna ([](http://github.com/shanna))
 
 == Copyright
 
