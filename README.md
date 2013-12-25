@@ -1,69 +1,65 @@
-= padrino-warden
+# padrino-warden
 
-A Padrino ([](http://github.com/padrino/padrino-framework)) module that provides authentication for your Padrino application through Warden ([](http://github.com/hassox/warden)).
+A [Padrino](http://github.com/padrino/padrino-framework) module that provides authentication for your Padrino application through [Warden](http://github.com/hassox/warden).
 
-Most of the code was adapted from sinatra\_warden ([](http://github.com/jsmestad/sinatra_warden))
+Most of the code was adapted from [sinatra\_warden](http://github.com/jsmestad/sinatra_warden).
 
-== Usage
+## Usage
 
 Currently padrino-warden uses +password+ as default authentication strategy. If you wish to change that consult
-Warden (http://github.com/hassox/warden).
+[Warden](http://github.com/hassox/warden).
 
-  class SampleApp < Padrino::Application
-    configure do
-      ##
-      # Application-specific configuration options
-      #
+```ruby
+class SampleApp < Padrino::Application
+  register Padrino::Warden
+
+  class User
+    attr_reader :name
+    def initialize(name)
+      @name=name
     end
 
-    register Padrino::Warden
-
-
-    class User
-      attr_reader :name
-      def initialize(name)
-        @name=name
-      end
-
-      def self.authenticate(a, b)
-        return User.new('john')
-      end
+    def self.authenticate(a, b)
+      return User.new('john')
     end
-
-    Warden::Strategies.add(:password) do
-      def valid?
-        params["email"] || params["password"]
-      end
-
-      def authenticate!
-        u = User.authenticate(params["email"], params["password"])
-        u.nil? ? fail!("Could not log in") : success!(u)
-      end
-    end
-
-    Warden::Manager.serialize_into_session do |user|
-      user.id
-    end
-
-    Warden::Manager.serialize_from_session do |id|
-      User.get(id)
-    end
-
   end
 
-Run this to see your new routes:
-  $ padrino rake routes
+  Warden::Strategies.add(:password) do
+    def valid?
+      params["email"] || params["password"]
+    end
 
-You can now login at
-  http://localhost/sessions/login
+    def authenticate!
+      u = User.authenticate(params["email"], params["password"])
+      u.nil? ? fail!("Could not log in") : success!(u)
+    end
+  end
+
+  Warden::Manager.serialize_into_session do |user|
+    user.id
+  end
+
+  Warden::Manager.serialize_from_session do |id|
+    User.get(id)
+  end
+end
+```
+
+Run this to see your new routes:
+
+  `$ padrino rake routes`
+
+You can now login at <http://localhost/sessions/login>
 
 After login you can fiddle with *current\_user* for anything you need.
 
-== Multi Sub-Apps
+## Multi Sub-Apps
 
 You UserApp(/user):
 
-    Register Padrino::Warden
+```ruby
+Register Padrino::Warden
+```
 
 This will mount the sessions controller on it:
 
@@ -71,11 +67,13 @@ This will mount the sessions controller on it:
 
 You OtherApps:
 
-    Register Padrino::Warden::Helpers
+```ruby
+Register Padrino::Warden::Helpers
+```
 
 But you must apply the same options in your UserApp.
 
-== Note on Patches/Pull Requests
+## Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -85,12 +83,12 @@ But you must apply the same options in your UserApp.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Contributors
+## Contributors
 
 * Dotan Nahum (http://github.com/jondot)
 
-For sinatra\_warden, thanks to: Justin Smestad ([](http://github.com/jsmestad)), Daniel Neighman ([](http://github.com/hassox)), Shane Hanna ([](http://github.com/shanna))
+For sinatra\_warden, thanks to: [Justin Smestad](http://github.com/jsmestad), [Daniel Neighman](http://github.com/hassox) and [Shane Hanna](http://github.com/shanna).
 
-== Copyright
+## Copyright
 
 Copyright (c) 2010 Dotan Nahum (jondot). See LICENSE for details.
