@@ -1,66 +1,44 @@
 require 'warden'
-require File.join(File.dirname(__FILE__), 'warden', 'helpers')
 
-Warden::Manager.before_failure do |env, opts|
-  # Sinatra is very sensitive to the request method
-  # since authentication could fail on any type of method, we need
-  # to set it for the failure app so it is routed to the correct block
-  env['REQUEST_METHOD'] = "POST"
+$:.unshift File.join( File.dirname(__FILE__), '..', '..' )
 
-  # Make sure our modified request isn't stopped by
-  # Rack::Protection::AuthenticityToken, if user doesn't have csrf set yet
-  request = Rack::Request.new(env)
-  csrf = request.session[:csrf] || SecureRandom.hex(32)
-  env['HTTP_X_CSRF_TOKEN'] = request.session[:csrf] = csrf
-end
+require 'padrino/warden/version'
+require 'padrino/warden/controller'
+require 'padrino/warden/helpers'
 
 module Padrino
   module Warden
-
     def self.registered(app)
-      Helpers.registered(app)
+      # Enable Sessions
+      app.set :sessions, true
+      app.set :auth_failure_path, '/'
+      app.set :auth_success_path, '/'
 
-      app.controller :sessions do
-        post :unauthenticated  do
-          status 401
-          warden.custom_failure! if warden.config.failure_app == self.class
-          flash.now[:error] = settings.auth_error_message if flash
-          render settings.auth_login_template
-        end
+      # Setting this to true will store last request URL
+      # into a user's session so that to redirect back to it
+      # upon successful authentication
+      app.set :auth_use_referrer,      false
+      app.set :auth_error_message,     "You have provided invalid credentials."
+      app.set :auth_success_message,   "You have logged in successfully."
+      app.set :deauth_success_message, "You have logged out successfully."
+      app.set :auth_login_template,    'sessions/login'
 
-        get :login do
-          if settings.auth_use_oauth && !@auth_oauth_request_token.nil?
-            session[:request_token] = @auth_oauth_request_token.token
-            session[:request_token_secret] = @auth_oauth_request_token.secret
-            redirect @auth_oauth_request_token.authorize_url
-          else
-            render settings.auth_login_template
-          end
-        end
+      # OAuth Specific Settings
+      app.set :auth_use_oauth, false
 
-        get :oauth_callback do
-          if settings.auth_use_oauth
-            authenticate
-            flash[:success] = settings.auth_success_message if flash
-            redirect settings.auth_success_path
-          else
-            redirect settings.auth_failure_path
-          end
-        end
+      app.set :warden_failure_app, app
+      app.set :warden_default_scope, :session
+      app.set(:warden_config) { |manager| nil }
 
-        post :login do
-          authenticate
-          flash[:success] = settings.auth_success_message if flash
-          redirect settings.auth_use_referrer && session[:return_to] ? session.delete(:return_to) : 
-                   settings.auth_success_path
-        end
-
-        get :logout do
-          logout
-          flash[:success] = settings.deauth_success_message if flash
-          redirect settings.auth_success_path
-        end
+      app.use ::Warden::Manager do |manager|
+        manager.scope_defaults :session, strategies: [:password]
+        manager.default_scope = app.warden_default_scope
+        manager.failure_app   = app.warden_failure_app
+        app.warden_config manager
       end
+
+      Controller.registered app
+      app.helpers Helpers
     end
-  end # Warden
-end # Padrino
+  end
+end
