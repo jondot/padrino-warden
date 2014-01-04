@@ -58,7 +58,7 @@ After login you can fiddle with *current\_user* for anything you need.
 You UserApp(/user):
 
 ```ruby
-Register Padrino::Warden
+register Padrino::Warden
 ```
 
 This will mount the sessions controller on it:
@@ -68,10 +68,32 @@ This will mount the sessions controller on it:
 You OtherApps:
 
 ```ruby
-Register Padrino::Warden::Helpers
+register Padrino::Warden::Helpers
 ```
 
 But you must apply the same options in your UserApp.
+
+## Overriding warden manager defaults
+
+```ruby
+class SampleApp < Padrino::Application
+  register Padrino::Warden
+
+  Warden::Strategies.add(:token) do
+    def valid?
+      params["token"]
+    end
+
+    def authenticate!
+      ...
+    end
+  end
+
+  set :warden_config do |manager|
+    manager.scope_defaults :api, strategies: [:token], store: false
+  end
+end
+```
 
 ## Note on Patches/Pull Requests
  
