@@ -32,7 +32,6 @@ module Padrino
           get :logout ,map: app.auth_logout_path do
             a1 = logout
             flash[:success] = settings.deauth_success_message if flash
-            binding.pry
             redirect settings.auth_success_path
           end
 
