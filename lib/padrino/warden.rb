@@ -10,7 +10,7 @@ module Padrino
   module Warden
     def self.registered(app)
       # Enable Sessions
-      app.set :sessions, true
+      app.set :sessions, true unless app.sessions
       app.set :auth_failure_path, '/'
       app.set :auth_success_path, '/'
 
