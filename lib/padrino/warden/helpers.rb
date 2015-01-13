@@ -29,6 +29,7 @@ module Padrino
       #
       # @param [Symbol] the session scope to terminate
       def logout(scopes=nil)
+        authenticated?
         scopes ? warden.logout(scopes) : warden.logout
       end
 
