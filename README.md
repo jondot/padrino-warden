@@ -4,6 +4,9 @@ A [Padrino](http://github.com/padrino/padrino-framework) module that provides au
 
 Most of the code was adapted from [sinatra\_warden](http://github.com/jsmestad/sinatra_warden).
 
+[![Gem
+Version](https://badge.fury.io/rb/padrino-warden.svg)](http://badge.fury.io/rb/padrino-warden)
+
 ## Usage
 
 Currently padrino-warden uses +password+ as default authentication strategy. If you wish to change that consult
