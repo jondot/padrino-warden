@@ -8,7 +8,7 @@ require 'padrino/warden/helpers'
 
 module Padrino
   module Warden
-    def self.registered(app)
+    def self.registered(app, register_controller = true)
       # Enable Sessions
       app.set :sessions, true unless app.sessions
       app.set :auth_failure_path, '/'
@@ -41,7 +41,9 @@ module Padrino
         app.warden_config manager
       end
 
-      Controller.registered app
+      if register_controller
+        Controller.registered app
+      end
       app.helpers Helpers
     end
   end

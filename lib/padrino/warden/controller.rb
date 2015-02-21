@@ -25,7 +25,7 @@ module Padrino
           post :login , map: app.auth_login_path do
             authenticate
             flash[:success] = settings.auth_success_message if flash
-            redirect settings.auth_use_referrer && session[:return_to] ? session.delete(:return_to) : 
+            redirect settings.auth_use_referrer && session[:return_to] ? session.delete(:return_to) :
               settings.auth_success_path
           end
 
