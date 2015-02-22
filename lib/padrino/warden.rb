@@ -31,7 +31,7 @@ module Padrino
       app.set :auth_use_oauth, false
       app.set :default_strategies, [:password] unless app.respond_to?(:default_strategies)
 
-      app.set :warden_failure_app, app
+      app.set :warden_failure_app, app unless app.respond_to?(:warden_failure_app)
       app.set :warden_default_scope, :session
       app.set(:warden_config) { |manager| nil }
       app.use ::Warden::Manager do |manager|
