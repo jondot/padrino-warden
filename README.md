@@ -58,7 +58,9 @@ After login you can fiddle with *current\_user* for anything you need.
 
 ## Multi Sub-Apps
 
-You UserApp(/user):
+padrino-warden can be used across multiple apps in one project. You need to have one UserApp which handles logins and logouts.
+
+Add this to your UserApp(/user):
 
 ```ruby
 register Padrino::Warden
@@ -74,7 +76,17 @@ You OtherApps:
 register Padrino::Warden::Helpers
 ```
 
-But you must apply the same options in your UserApp.
+Configure warden globally within config/apps.rb. Don't forget to tell warden about the UserApp:
+
+```ruby
+Padrino.configure_apps do
+  ...
+  set :warden_failure_app, UserApp
+end
+```
+
+Your UserApp needs to be mounted first in Padrino! Cascading routes from the UserApp can cause exceptions, so don't use an app mounted to the root path ('/') as UserApp.
+
 
 ## Overriding warden manager defaults
 
@@ -99,7 +111,7 @@ end
 ```
 
 ## Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a

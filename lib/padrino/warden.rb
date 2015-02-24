@@ -8,7 +8,7 @@ require 'padrino/warden/helpers'
 
 module Padrino
   module Warden
-    def self.registered(app)
+    def self.registered(app, register_controller = true)
       # Enable Sessions
       app.set :sessions, true unless app.sessions
       app.set :auth_failure_path, '/'
@@ -31,7 +31,7 @@ module Padrino
       app.set :auth_use_oauth, false
       app.set :default_strategies, [:password] unless app.respond_to?(:default_strategies)
 
-      app.set :warden_failure_app, app
+      app.set :warden_failure_app, app unless app.respond_to?(:warden_failure_app)
       app.set :warden_default_scope, :session
       app.set(:warden_config) { |manager| nil }
       app.use ::Warden::Manager do |manager|
@@ -41,7 +41,9 @@ module Padrino
         app.warden_config manager
       end
 
-      Controller.registered app
+      if register_controller
+        Controller.registered app
+      end
       app.helpers Helpers
     end
   end

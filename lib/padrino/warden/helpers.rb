@@ -51,6 +51,11 @@ module Padrino
         warden.set_user(new_user, opts)
       end
       alias_method :current_user=, :user=
+
+      # Register the helpers directly without the controller (useful for MultiApp environments)
+      def self.registered(app)
+        Padrino::Warden.registered(app, false)
+      end
     end # helpers
   end # Warden
 end # Padrino
