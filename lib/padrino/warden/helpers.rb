@@ -21,6 +21,8 @@ module Padrino
 
       # Authenticate a user against defined strategies
       def authenticate(*args)
+        session[:return_to] = request.fullpath if settings.auth_use_referrer and
+          env['REQUEST_METHOD'] == 'GET'
         warden.authenticate!(*args)
       end
       alias_method :login, :authenticate
