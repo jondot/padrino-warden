@@ -14,10 +14,10 @@ module Padrino
       app.set :auth_failure_path, '/'
       app.set :auth_success_path, '/'
 
-      # Setting this to true will store last request URL
-      # into a user's session so that to redirect back to it
-      # upon successful authentication
+      # set :auth_use_referrer to true to redirect a user back to an action
+      # protected by 'login'/'authenticate' after successful login
       app.set :auth_use_referrer,      false
+
       app.set :auth_error_message,     "You have provided invalid credentials."
       app.set :auth_success_message,   "You have logged in successfully."
       app.set :deauth_success_message, "You have logged out successfully."
