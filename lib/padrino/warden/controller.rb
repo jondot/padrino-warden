@@ -13,6 +13,7 @@ module Padrino
           end
           ## /sessions/login
           get :login , map: app.auth_login_path  do
+            session.delete(:return_to)
             if settings.auth_use_oauth && !@auth_oauth_request_token.nil?
               session[:request_token] = @auth_oauth_request_token.token
               session[:request_token_secret] = @auth_oauth_request_token.secret
