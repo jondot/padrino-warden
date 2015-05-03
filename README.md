@@ -87,6 +87,13 @@ end
 
 Your UserApp needs to be mounted first in Padrino! Cascading routes from the UserApp can cause exceptions, so don't use an app mounted to the root path ('/') as UserApp.
 
+## Configuration
+
+There are some options you can override to customize padrino-warden to your
+needs. Please consult the
+[wiki](https://github.com/jondot/padrino-warden/wiki/Options) page to see all
+of them.
+
 
 ## Overriding warden manager defaults
 
@@ -110,6 +117,10 @@ class SampleApp < Padrino::Application
 end
 ```
 
+## Changelog
+
+Changelog is available on the [wiki](https://github.com/jondot/padrino-warden/wiki/Changelog).
+
 ## Note on Patches/Pull Requests
 
 * Fork the project.
@@ -123,9 +134,11 @@ end
 ## Contributors
 
 * Dotan Nahum (http://github.com/jondot)
+* Michał Zając (http://github.com/Quintasan)
 
 For sinatra\_warden, thanks to: [Justin Smestad](http://github.com/jsmestad), [Daniel Neighman](http://github.com/hassox) and [Shane Hanna](http://github.com/shanna).
 
 ## Copyright
 
 Copyright (c) 2010 Dotan Nahum (jondot). See LICENSE for details.
+Copyright (c) 2015 Michał Zając (Quintasan). See LICENSE for details.
