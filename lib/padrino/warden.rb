@@ -19,6 +19,7 @@ module Padrino
         # set :auth_use_referrer to true to redirect a user back to an action
         # protected by 'login'/'authenticate' after successful login
         auth_use_referrer: false,
+        auth_protected_message: "",
 
         auth_error_message:     "You have provided invalid credentials.",
         auth_success_message:   "You have logged in successfully.",

@@ -7,7 +7,14 @@ module Padrino
             __send__ method, :unauthenticated, map: app.auth_unauthenticated_path do
               status 401
               warden.custom_failure! if warden.config.failure_app == self.class
-              flash.now[:error] = settings.auth_error_message if flash
+              if flash
+                if session[:pw_auth_via_login_attempt]
+                  flash.now[:error] = settings.auth_error_message
+                  session.delete(:pw_auth_via_login_attempt)
+                else
+                  flash.now[:error] = settings.auth_protected_message if !settings.auth_protected_message.empty?
+                end
+              end
               render settings.auth_login_template, layout: settings.auth_login_layout
             end
           end
@@ -24,6 +31,7 @@ module Padrino
           end
 
           post :login, map: app.auth_login_path do
+            session[:pw_auth_via_login_attempt] = true
             authenticate
             flash[:success] = settings.auth_success_message if flash
             redirect settings.auth_use_referrer && session[:return_to] ? session.delete(:return_to) :
